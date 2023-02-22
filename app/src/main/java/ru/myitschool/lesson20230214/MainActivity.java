@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        if (repository == null) repository = ProductRepository.getInstance(getApplicationContext());
+       if (repository == null) repository = ProductRepository.getInstance(getApplicationContext());
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.rootContainer);

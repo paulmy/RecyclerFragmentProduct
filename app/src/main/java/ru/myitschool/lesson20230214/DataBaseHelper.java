@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.util.Log;
 
 
@@ -17,7 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1; // версия базы данных
     static final String TABLE_NAME = "products"; // название таблицы в бд
     // названия столбцов
-    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_ID = "id";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_COUNT = "count";
@@ -27,7 +28,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final int NUM_COLUMN_DESCRIPTION = 2;
     public static final int NUM_COLUMN_COUNT = 3;
 
-   static SQLiteDatabase database;
+    static SQLiteDatabase database;
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -69,7 +70,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 null);
         cursor.moveToFirst();
         ArrayList<ProductData> result = new ArrayList<>();
-        //if (cursor.isAfterLast()) return new ArrayList<>();
+        if (cursor.isAfterLast()) return new ArrayList<>();
         do {
             result.add(
                     new ProductData(
@@ -94,5 +95,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         NUM_COLUMN_ID = (int) position;
         //db.delete(DatabaseHelper.TABLE, "_id = ?", new String[]{String.valueOf(userId)});
         //database.delete(TABLE_NAME,"_id = ?",new String[]{String.valueOf(NUM_COLUMN_ID)});
+    }
+
+    public void update(ProductData data,int NUM_COLUMN1) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_TITLE, data.getName());
+        cv.put(COLUMN_DESCRIPTION, data.getDescription());
+        cv.put(COLUMN_COUNT, data.getCount());
+       // database.insert(TABLE_NAME, null, cv);
+
+
+            database.update(TABLE_NAME, cv, NUM_COLUMN_ID + "=" + NUM_COLUMN1, null);
+
+            //database.insert(TABLE_NAME, null, cv);
+
     }
 }

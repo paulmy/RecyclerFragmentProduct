@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import ru.myitschool.lesson20230214.databinding.DetailMainBinding;
 
 public class DetailFragment extends Fragment {
-    private final ProductRepository repository =  ProductRepository.getInstance(getContext());
+    private final ProductRepository repository = ProductRepository.getInstance(getContext());
     private static ProductData data;
 
     public static DetailFragment newInstance(ProductRepository repository, int position) {
@@ -28,7 +28,6 @@ public class DetailFragment extends Fragment {
     }
 
     private DetailMainBinding binding;
-
 
 
     @Nullable
@@ -63,8 +62,8 @@ public class DetailFragment extends Fragment {
         );
         binding.save.setOnClickListener(view1 -> {
                     ProductData temp = new ProductData(binding.title.getText().toString(), binding.description.getText().toString(), Integer.valueOf(binding.count.getText().toString()));
-                    repository.replaceProduct(temp,repository.getPos(data));
-
+                       repository.replaceProduct(temp,repository.getPos(data));
+                    //repository.updateProduct(temp,repository.getPos(temp));
                     getParentFragmentManager()
                             .beginTransaction()
                             .replace(R.id.rootContainer, new MainFragment())

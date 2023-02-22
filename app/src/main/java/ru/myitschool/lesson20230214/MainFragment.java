@@ -22,7 +22,7 @@ import ru.myitschool.lesson20230214.databinding.FragmentMainBinding;
 public class MainFragment extends Fragment {
     private final ProductRepository repository = ProductRepository.getInstance(getContext());
 
-    private DataBaseHelper dataBaseHelper = null;
+    private DataBaseHelper dataBaseHelper;
 
     ProductAdapter.OnProductDataClickListener productClickListener = new ProductAdapter.OnProductDataClickListener() {
 

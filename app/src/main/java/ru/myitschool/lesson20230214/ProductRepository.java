@@ -1,11 +1,13 @@
 package ru.myitschool.lesson20230214;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
 
 public class ProductRepository implements AutoCloseable {
+    static int count = 0;
     private static ProductRepository instance = null;
 
     //Context context;
@@ -20,12 +22,23 @@ public class ProductRepository implements AutoCloseable {
 
     public ProductRepository(Context context) {
         dataBaseHelper = new DataBaseHelper(context);
-        Log.d("DB","OPEN DB REPO  ProductRepository(Context context) ");
-        products.addAll(dataBaseHelper.getAll() );
+        Log.d("DB", "OPEN DB REPO  ProductRepository(Context context) ");
+        products.addAll(dataBaseHelper.getAll());
+        if (count == 0) {
+            initBase();
+            count++;
+        }
 
-        // products.add(new ProductData("Хлеб", "бородинский", 45));
-        // products.add(new ProductData("Молоко", "жирность 3,5", 60));
-        //products.add(new ProductData("Сыр", "Российский", 50));
+
+    }
+
+    private void initBase() {
+        products.add(new ProductData("Хлеб", "бородинский", 45));
+        products.add(new ProductData("Молоко", "жирность 3,5", 60));
+        products.add(new ProductData("Сыр", "Российский", 50));
+        for (ProductData p:products ) {
+            dataBaseHelper.add(p);
+        }
 
     }
 
@@ -45,8 +58,8 @@ public class ProductRepository implements AutoCloseable {
     }
 
     public void removeByPosition(int position) {
-        dataBaseHelper.removeProduct(position);
-        //products.remove(position);
+        //dataBaseHelper.removeProduct(position);
+        products.remove(position);
 
     }
 
@@ -55,10 +68,13 @@ public class ProductRepository implements AutoCloseable {
         products.set(position, temp);
     }
 
+    public void updateProduct(ProductData productData, int id) {
+        dataBaseHelper.update(productData, id);
+    }
 
     @Override
     public void close() {
         dataBaseHelper.close();
-        Log.d("DB","CLOSE DB PRODUCT_REPO dataBaseHelper.close()");
+        Log.d("DB", "CLOSE DB PRODUCT_REPO dataBaseHelper.close()");
     }
 }
