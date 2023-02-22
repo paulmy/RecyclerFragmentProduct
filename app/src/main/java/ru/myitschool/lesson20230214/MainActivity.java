@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // ProductRepository.dataBaseHelper.close();
+
         repository.close();
         Log.d("DB", "CLOSE DB in MainActivity repository.close()");
     }

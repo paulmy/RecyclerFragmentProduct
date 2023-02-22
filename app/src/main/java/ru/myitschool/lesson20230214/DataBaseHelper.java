@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
+
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "product.db"; // название бд
@@ -93,6 +93,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void removeProduct(long position) {
         NUM_COLUMN_ID = (int) position;
         //db.delete(DatabaseHelper.TABLE, "_id = ?", new String[]{String.valueOf(userId)});
-        database.delete(TABLE_NAME,"_id = ?",new String[]{String.valueOf(NUM_COLUMN_ID)});
+        //database.delete(TABLE_NAME,"_id = ?",new String[]{String.valueOf(NUM_COLUMN_ID)});
     }
 }
