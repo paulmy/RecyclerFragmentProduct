@@ -11,17 +11,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+
 import ru.myitschool.lesson20230214.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-
+    private ProductRepository repository = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        if (repository == null) repository = ProductRepository.getInstance(getApplicationContext());
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.rootContainer);
@@ -34,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // ProductRepository.dataBaseHelper.close();
+        repository.close();
+        Log.d("DB", "CLOSE DB in MainActivity repository.close()");
+    }
 }

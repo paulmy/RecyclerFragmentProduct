@@ -1,6 +1,7 @@
 package ru.myitschool.lesson20230214;
 
 
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,9 +20,9 @@ import ru.myitschool.lesson20230214.databinding.FragmentMainBinding;
 
 
 public class MainFragment extends Fragment {
-    private final  ProductRepository repository = ProductRepository.getInstance();
+    private final ProductRepository repository = ProductRepository.getInstance(getContext());
 
-
+    private DataBaseHelper dataBaseHelper = null;
 
     ProductAdapter.OnProductDataClickListener productClickListener = new ProductAdapter.OnProductDataClickListener() {
 
@@ -54,6 +55,7 @@ public class MainFragment extends Fragment {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             repository.removeByPosition(viewHolder.getAdapterPosition());
             adapter.removeItemByPosition(viewHolder.getAdapterPosition());
+            //        dataBaseHelper.removeProduct(viewHolder.getAdapterPosition());
         }
     };
     private static int count;
@@ -62,12 +64,18 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (dataBaseHelper == null) dataBaseHelper = new DataBaseHelper(getContext());
 
+        Log.d("DB", "OPEN DB MAINFARGMENT");
         FragmentMainBinding binding = FragmentMainBinding.inflate(inflater, container, false);
         binding.container.setAdapter(adapter);
         new ItemTouchHelper(swipeToDelete).attachToRecyclerView(binding.container);
         binding.add.setOnClickListener(v -> {
+
+
+            //repository.addProduct(new ProductData("Product " + count++, count % 2 == 0 ? "test description\nmultiLine\nexample\ntest" : "", (int) (Math.random() * 100)));
             repository.addProduct(new ProductData("Product " + count++, count % 2 == 0 ? "test description\nmultiLine\nexample\ntest" : "", (int) (Math.random() * 100)));
+
             Log.d("Add", "" + count);
             adapter.setData(repository.getProducts());
         });
@@ -94,4 +102,6 @@ public class MainFragment extends Fragment {
 
 
     }
+
+
 }

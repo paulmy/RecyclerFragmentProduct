@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import ru.myitschool.lesson20230214.databinding.DetailMainBinding;
 
 public class DetailFragment extends Fragment {
-    private final ProductRepository repository =  ProductRepository.getInstance();
+    private final ProductRepository repository =  ProductRepository.getInstance(getContext());
     private static ProductData data;
 
     public static DetailFragment newInstance(ProductRepository repository, int position) {
@@ -28,6 +28,8 @@ public class DetailFragment extends Fragment {
     }
 
     private DetailMainBinding binding;
+
+
 
     @Nullable
     @Override
