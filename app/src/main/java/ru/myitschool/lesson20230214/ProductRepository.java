@@ -23,8 +23,9 @@ public class ProductRepository implements AutoCloseable {
     public ProductRepository(Context context) {
         dataBaseHelper = new DataBaseHelper(context);
         Log.d("DB", "OPEN DB REPO  ProductRepository(Context context) ");
-        products.addAll(dataBaseHelper.getAll());
+
         if (count == 0) {
+            products.addAll(dataBaseHelper.getAll());
             initBase();
             count++;
         }
